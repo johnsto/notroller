@@ -1,0 +1,63 @@
+html {
+	font-family: sans-serif;
+	user-select: none;
+	webkit-user-select: none;
+	overflow: hidden;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	overflow: hidden;
+	height: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.title {
+	background: #333;
+	color: #fff;
+	padding: 0.5em;
+}
+.header {
+	text-align: center;
+	padding: 1em;
+}
+
+.btn {
+	background: #999;
+	color: #fff;
+	border: none;
+	text-decoration: none;
+}
+.btn:hover {
+	background: #333;
+	color: #ccc;
+}
+.btn:active {
+	background: #000;
+	color: #fff;
+}
+
+.flex {
+	display: flex;
+}
+.port-selector {
+	display: flex;
+}
+.port-selector > a {
+	font-size: 1.5em;
+}
+.port-selector > a:nth-child(1) {
+	background: #03A9F4;
+}
+.port-selector > a:nth-child(2) {
+	background: #8BC34A;
+}
+.port-selector > a:nth-child(3) {
+	background: #FFC107;
+}
+.port-selector > a:nth-child(4) {
+	background: #795548;
+}
