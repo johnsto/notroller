@@ -1,154 +1,19 @@
 <!doctype html>
 <html>
-
 	<head>
 		<title>GoStick</title>
-
+		<link rel="stylesheet" href="main.css" />
 		<meta name="viewport" content="initial-scale=1, user-scalable=0">
-
-		<style>
-			html {
-				user-select: none;
-				webkit-user-select: none;
-			}
-			.pad {
-				position: absolute;
-				left: 0;
-				right: 0;
-				top: 0;
-				bottom: 0;
-				background: red;
-			}
-			.pad > .btn {
-				position: absolute;
-				background: green;
-			}
-			.pad > .btn.on {
-				background: blue;
-			}
-			.pad > .status {
-				text-align: center;
-				color: #fff;
-			}
-		</style>
 	</head>
-
-	<body>
-		<div class="pad">
-			<div class="status"
-				style="left: 10%; right: 10%; top: 5%;"></div>
-
-			<div class="btn dpad forward" data-button="forward"
-				style="left: 15%; width: 15%; top: 20%; height: 20%">U</div>
-			<div class="btn dpad forward" data-button="forward right"
-				style="left: 30%; width: 15%; top: 20%; height: 20%">UR</div>
-			<div class="btn dpad right" data-button="right"
-				style="left: 30%; width: 15%; top: 40%; height: 20%">R</div>
-			<div class="btn dpad right" data-button="right back"
-				style="left: 30%; width: 15%; top: 60%; height: 20%">RD</div>
-			<div class="btn dpad back" data-button="back"
-				style="left: 15%; width: 15%; top: 60%; height: 20%">D</div>
-			<div class="btn dpad back" data-button="back left"
-				style="left: 0%; width: 15%; top: 60%; height: 20%">DL</div>
-			<div class="btn dpad left" data-button="left"
-				style="left: 0%; width: 15%; top: 40%; height: 20%">L</div>
-			<div class="btn dpad left" data-button="left forward"
-				style="left: 0%; width: 15%; top: 20%; height: 20%">LU</div>
-
-			<div class="btn face" data-button="a"
-				style="left: 50%; width: 25%; top: 10%; height: 40%">A</div>
-			<div class="btn face" data-button="b"
-				style="left: 75%; width: 25%; top: 10%; height: 40%">B</div>
-			<div class="btn face" data-button="x"
-				style="left: 50%; width: 25%; top: 50%; height: 40%">X</div>
-			<div class="btn face" data-button="y"
-				style="left: 75%; width: 25%; top: 50%; height: 40%">Y</div>
-
-			<div class="btn face" data-button="start"
-				style="left: 25%; width: 20%; top: 90%; height: 10%">Start</div>
-			<div class="btn face" data-button="select"
-				style="left: 55%; width: 20%; top: 90%; height: 10%">Select</div>
+	<body class="flex" style="flex-direction: column;">
+		<div style="flex: 0 1 auto;" class="title">GoStick</div>
+		<div style="flex: 0 1 auto;" class="header">Select a port</div>
+		<div style="flex: 5 5 auto;" class="port-selector">
+			{{ range $i, $e := .Ports }}
+			<a href="/{{$e}}" class="btn" style="flex: 1 1 auto;">
+				{{ $e }}
+			</a>
+			{{ end }}
 		</div>
-
-		<script>
-			"use strict";
-
-			(function() {
-				var conn;
-
-				var status = document.querySelectorAll(".status")[0];
-				var attempts = 0;
-
-				var connect = function() {
-					status.innerHTML = "Connecting...";
-
-					conn = new WebSocket("ws://{{$}}/ws");
-					conn.onerror = function(evt) {
-						console.error("connection error" + evt);
-					};
-					conn.onopen = function(evt) {
-						console.log("connection opened" + evt);
-						status.innerHTML ="Connected.";
-						attempts = 0;
-						wire();
-					};
-					conn.onclose = function(evt) {
-						console.log("connection closed" + evt);
-						if(attempts < 5) {
-							attempts++;
-							setTimeout(connect, attempts * 100);
-						} else {
-							status.innerHTML = "Connection lost.";
-						}
-					};
-					conn.onmessage = function(evt) {
-						console.log("message: " + evt);
-					};
-				};
-
-				var onListener = function(evt) {
-					var el = evt.target,
-						button = el.getAttribute("data-button"),
-						buttons = button.split(" ");
-					for(var i = 0; i < buttons.length; i++) {
-						conn.send(JSON.stringify({
-							button: buttons[i],
-							value: 1,
-						}));
-					}
-					el.classList.add("on");
-				}
-
-				var offListener = function(evt) {
-					var el = evt.target,
-						button = el.getAttribute("data-button"),
-						buttons = button.split(" ");
-					for(var i = 0; i < buttons.length; i++) {
-						conn.send(JSON.stringify({
-							button: buttons[i],
-							value: 0,
-						}));
-					}
-					el.classList.remove("on");
-				};
-
-				connect();
-
-				var wire = function() {
-					var btn = document.querySelectorAll(".btn");
-					for(var i = 0; i < btn.length; i++) {
-						var el = btn[i];
-						el.addEventListener("mousedown", onListener);
-						el.addEventListener("mouseup", offListener);
-						el.addEventListener("touchstart", onListener);
-						el.addEventListener("touchend", offListener);
-						el.addEventListener("touchenter", onListener);
-						el.addEventListener("touchleave", offListener);
-					}
-				}
-
-			})();
-		</script>
 	</body>
-
 </html>

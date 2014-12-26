@@ -49,8 +49,8 @@ func NewInput(name string) (*Input, error) {
 
 	var abs C.struct_input_absinfo
 	abs.value = 0
-	abs.minimum = -1280
-	abs.maximum = 1280
+	abs.minimum = -32768
+	abs.maximum = 32768
 	abs.fuzz = 0
 	abs.flat = 0
 	abs.resolution = 5
