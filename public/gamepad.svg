@@ -114,31 +114,15 @@
     	d="m -3,-3 -7,0 0,-4 3,-3 4,0 z" />
   </g>-->
 
-  <g transform="translate(90, 90) scale(6, 6)" class="dpad-axis">
-    <path class="abs dpad" id="abs-right" 
-    	data-axis-x="32768" data-axis-y="0"
-	d="m 0,0 3,-3 7,0 0,6 -7,0 z"/>
-    <path class="abs dpad corner" id="abs-right-down"
-    	data-axis-x="32768" data-axis-y="32768"
-    	d="m 3,3 7,0 0,4 -3,3 -4,0 z" />
-    <path class="abs dpad" id="abs-left" data-button="left"
-    	data-axis-x="-32767" data-axis-y="0"
-    	d="m 0,0 -3,-3 -7,0 0,6 7,0 z" />
-    <path class="abs dpad corner" id="abs-left-down" data-button="left down"
-    	data-axis-x="-32767" data-axis-y="32768"
-    	d="m -3,3 -7,0 0,4 3,3 4,0 z" />
-    <path class="abs dpad" id="abs-down" data-button="down"
-    	data-axis-x="0" data-axis-y="32768" 
-    	d="M -3e-8,0 3,3 l 0,7 -6,0 0,-7 z" />
-    <path class="abs dpad corner" id="abs-right-up" data-button="right up"
-    	data-axis-x="32768" data-axis-y="-32767"
-    	d="m 3,-3 7,0 0,-4 -3,-3 -4,0 z" />
-    <path class="abs dpad" id="abs-up" data-button="up"
-    	data-axis-x="0" data-axis-y="-32767"
-    	d="M -3e-8,0 3,-3 l 0,-7 -6,0 0,7 z" />
-    <path class="abs dpad corner" id="abs-left-up" data-button="left up"
-    	data-axis-x="32768" data-axis-y="-32767"
-    	d="m -3,-3 -7,0 0,-4 3,-3 4,0 z" />
+  <g transform="translate(80, 110)" class="dpad-axis">
+    <rect class="abs dpad" id="abs-left" data-axis-x="-32767"
+    	width="30" height="30" x="-55" y="-15" />
+    <rect class="abs dpad" id="abs-right" data-axis-x="32768"
+    	width="30" height="30" x="25" y="-15" />
+    <rect class="abs dpad" id="abs-up" data-axis-y="-32767"
+    	width="30" height="30" x="-15" y="-55" />
+    <rect class="abs dpad" id="abs-down" data-axis-y="32768"
+    	width="30" height="30" x="-15" y="25" />
   </g>
 
   <g transform="translate(220, 5)">

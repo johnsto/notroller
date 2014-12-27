@@ -235,10 +235,10 @@ window.addEventListener("load", function() {
                 var t = evtTouches[i];
                 console.log(t.radiusX, t.radiusY, t.force);
                 rv.push({
-                    x: t.clientX - t.radiusX / 2, 
-                    y: t.clientY - t.radiusY / 2,
-                    w: t.radiusX,
-                    h: t.radiusY,
+                    x: t.clientX - t.radiusX, 
+                    y: t.clientY - t.radiusY,
+                    w: 2 * t.radiusX,
+                    h: 2 * t.radiusY,
                 });
             }
         } else {
@@ -281,8 +281,8 @@ window.addEventListener("load", function() {
                 r.width = p.w;
                 r.height = p.h;
                 var els = d.getIntersectionList(r, null);
-                for(var i = 0; i < els.length; i++) {
-                    touched[els[i].id] = p;
+                for(var j = 0; j < els.length; j++) {
+                    touched[els[j].id] = p;
                 }
             }
         }
