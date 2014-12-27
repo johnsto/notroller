@@ -12,26 +12,30 @@ import (
 )
 
 type Button int16
-type Axis int64
+type Abs int64
 
 const (
-	AxisX  Axis = C.ABS_X
-	AxisY  Axis = C.ABS_Y
-	AxisRX Axis = C.ABS_RX
-	AxisRY Axis = C.ABS_RY
+	AbsX  Abs = C.ABS_X
+	AbsY  Abs = C.ABS_Y
+	AbsRX Abs = C.ABS_RX
+	AbsRY Abs = C.ABS_RY
 )
 
 const (
-	BtnA       Button = C.BTN_A
-	BtnB       Button = C.BTN_B
-	BtnX       Button = C.BTN_X
-	BtnY       Button = C.BTN_Y
-	BtnStart   Button = C.BTN_START
-	BtnSelect  Button = C.BTN_SELECT
-	BtnForward Button = C.BTN_FORWARD
-	BtnBack    Button = C.BTN_BACK
-	BtnLeft    Button = C.BTN_LEFT
-	BtnRight   Button = C.BTN_RIGHT
+	BtnA         Button = C.BTN_A
+	BtnB         Button = C.BTN_B
+	BtnX         Button = C.BTN_X
+	BtnY         Button = C.BTN_Y
+	BtnStart     Button = C.BTN_START
+	BtnSelect    Button = C.BTN_SELECT
+	BtnForward   Button = C.BTN_FORWARD
+	BtnBack      Button = C.BTN_BACK
+	BtnLeft      Button = C.BTN_LEFT
+	BtnRight     Button = C.BTN_RIGHT
+	BtnDpadUp    Button = C.BTN_DPAD_UP
+	BtnDpadDown  Button = C.BTN_DPAD_DOWN
+	BtnDpadLeft  Button = C.BTN_DPAD_LEFT
+	BtnDpadRight Button = C.BTN_DPAD_RIGHT
 )
 
 type Input struct {
@@ -97,8 +101,8 @@ func (i *Input) Close() {
 	i.f.Close()
 }
 
-func (i Input) SendAbs(axis Axis, value int) {
-	C.libevdev_uinput_write_event(i.uidev, C.EV_ABS, C.uint(axis), C.int(value))
+func (i Input) SendAbs(abs Abs, value int) {
+	C.libevdev_uinput_write_event(i.uidev, C.EV_ABS, C.uint(abs), C.int(value))
 	C.libevdev_uinput_write_event(i.uidev, C.EV_SYN, C.SYN_REPORT, 0)
 }
 

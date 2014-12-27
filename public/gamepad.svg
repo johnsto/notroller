@@ -2,7 +2,8 @@
 <svg
    xmlns="http://www.w3.org/2000/svg" version="1.1"
    width="320" height="180" viewBox="0 0 320 180"
-   preserveAspectRatio="xMidYMid meet">
+   preserveAspectRatio="xMidYMid meet"
+   class="dpad-as-axis">
   <defs>
   	<style><![CDATA[
 		svg {
@@ -13,19 +14,38 @@
 			font-family: sans-serif;
 			text-anchor: middle;
 		}
+
+		svg .dpad-buttons,
+		svg .dpad-axis,
+		svg .dpad-dpad {
+			display: none;
+		}
+		svg.dpad-as-buttons .dpad-buttons,
+		svg.dpad-as-dpad .dpad-dpad,
+		svg.dpad-as-axis .dpad-axis {
+			display: initial;
+		}
+			display: initial;
+		}
+
 		.pad {
 			fill: #999;
 			stroke: #666;
 			stroke-width: 2px;
 		}
-		.btn.dpad.corner {
+		.dpad {
+			fill: #999;
+		}
+		.dpad.corner {
 			fill: #777;
+		}
+		.dpad.on {
+			fill: #ccc;
 		}
 		.btn {
 			fill: #999;
 		}
-		.btn.on,
-		.btn.dpad.corner.on {
+		.btn.on {
 			fill: #ccc;
 		}
 		.pad.on {
@@ -43,38 +63,100 @@
 	]]></style>
   </defs>
 
-  <g style="display: none;">
+  <!--<g style="display: none;">
     <circle class="pad" id="pad-xy" data-axis="xy" data-nub="pad-nub" cx="90" cy="90" r="75" fill="#9f9f9f" />
     <circle class="pad-nub notouch" id="pad-nub" cx="90" cy="90" r="15" fill="#000000" />
+  </g>-->
+
+  <!--<g transform="translate(90, 90) scale(6, 6)" class="dpad-dpad">
+    <path class="btn dpad" id="btn-dpad-right"
+    	data-button="dpad-right"
+    	d="m 0,0 3,-3 7,0 0,6 -7,0 z"/>
+    <path class="btn dpad corner" id="btn-dpad-right-down"
+    	data-button="dpad-right dpad-down"
+    	d="m 3,3 7,0 0,4 -3,3 -4,0 z" />
+    <path class="btn dpad" id="btn-dpad-left"
+    	data-button="dpad-left"
+    	d="m 0,0 -3,-3 -7,0 0,6 7,0 z" />
+    <path class="btn dpad corner" id="btn-dpad-left-down"
+    	data-button="dpad-left dpad-down"
+    	d="m -3,3 -7,0 0,4 3,3 4,0 z" />
+    <path class="btn dpad" id="btn-dpad-down"
+    	data-button="dpad-down"
+    	d="M -3e-8,0 3,3 l 0,7 -6,0 0,-7 z" />
+    <path class="btn dpad corner" id="btn-dpad-right-up"
+    	data-button="dpad-right dpad-up"
+    	d="m 3,-3 7,0 0,-4 -3,-3 -4,0 z" />
+    <path class="btn dpad" id="btn-dpad-up"
+    	data-button="dpad-up"
+    	d="M -3e-8,0 3,-3 l 0,-7 -6,0 0,7 z" />
+    <path class="btn dpad corner" id="btn-left-up"
+    	data-button="dpad-left dpad-up"
+    	d="m -3,-3 -7,0 0,-4 3,-3 4,0 z" />
   </g>
 
-  <g transform="translate(90, 90) scale(6, 6)">
-    <path class="btn dpad" data-button="right" d="m 0,0 3,-3 7,0 0,6 -7,0 z" id="btn-right" />
-    <path class="btn dpad corner" data-button="right down" d="m 3,3 7,0 0,4 -3,3 -4,0 z" id="btn-right-down" />
-    <path class="btn dpad" data-button="left" d="m 0,0 -3,-3 -7,0 0,6 7,0 z" id="btn-left" />
-    <path class="btn dpad corner" data-button="left down" d="m -3,3 -7,0 0,4 3,3 4,0 z" id="btn-left-down" />
-    <path class="btn dpad" data-button="down" d="M -3e-8,0 3,3 l 0,7 -6,0 0,-7 z" id="btn-down" />
-    <path class="btn dpad corner" data-button="right up" d="m 3,-3 7,0 0,-4 -3,-3 -4,0 z" id="btn-right-up" />
-    <path class="btn dpad" data-button="up" d="M -3e-8,0 3,-3 l 0,-7 -6,0 0,7 z" id="btn-up" />
-    <path class="btn dpad corner" data-button="left up" d="m -3,-3 -7,0 0,-4 3,-3 4,0 z" id="btn-left-up" />
+  <g transform="translate(90, 90) scale(6, 6)" class="dpad-buttons">
+    <path class="btn dpad" id="btn-right" data-button="right"
+    	d="m 0,0 3,-3 7,0 0,6 -7,0 z"/>
+    <path class="btn dpad corner" id="btn-right-down" data-button="right down"
+    	d="m 3,3 7,0 0,4 -3,3 -4,0 z" />
+    <path class="btn dpad" id="btn-left" data-button="left"
+    	d="m 0,0 -3,-3 -7,0 0,6 7,0 z" />
+    <path class="btn dpad corner" id="btn-left-down" data-button="left down"
+    	d="m -3,3 -7,0 0,4 3,3 4,0 z" />
+    <path class="btn dpad" id="btn-down" data-button="down"
+    	d="M -3e-8,0 3,3 l 0,7 -6,0 0,-7 z" />
+    <path class="btn dpad corner" id="btn-right-up" data-button="right up"
+    	d="m 3,-3 7,0 0,-4 -3,-3 -4,0 z" />
+    <path class="btn dpad" id="btn-up" data-button="up"
+    	d="M -3e-8,0 3,-3 l 0,-7 -6,0 0,7 z" />
+    <path class="btn dpad corner" id="btn-left-up" data-button="left up"
+    	d="m -3,-3 -7,0 0,-4 3,-3 4,0 z" />
+  </g>-->
+
+  <g transform="translate(90, 90) scale(6, 6)" class="dpad-axis">
+    <path class="abs dpad" id="abs-right" 
+    	data-axis-x="32768" data-axis-y="0"
+	d="m 0,0 3,-3 7,0 0,6 -7,0 z"/>
+    <path class="abs dpad corner" id="abs-right-down"
+    	data-axis-x="32768" data-axis-y="32768"
+    	d="m 3,3 7,0 0,4 -3,3 -4,0 z" />
+    <path class="abs dpad" id="abs-left" data-button="left"
+    	data-axis-x="-32767" data-axis-y="0"
+    	d="m 0,0 -3,-3 -7,0 0,6 7,0 z" />
+    <path class="abs dpad corner" id="abs-left-down" data-button="left down"
+    	data-axis-x="-32767" data-axis-y="32768"
+    	d="m -3,3 -7,0 0,4 3,3 4,0 z" />
+    <path class="abs dpad" id="abs-down" data-button="down"
+    	data-axis-x="0" data-axis-y="32768" 
+    	d="M -3e-8,0 3,3 l 0,7 -6,0 0,-7 z" />
+    <path class="abs dpad corner" id="abs-right-up" data-button="right up"
+    	data-axis-x="32768" data-axis-y="-32767"
+    	d="m 3,-3 7,0 0,-4 -3,-3 -4,0 z" />
+    <path class="abs dpad" id="abs-up" data-button="up"
+    	data-axis-x="0" data-axis-y="-32767"
+    	d="M -3e-8,0 3,-3 l 0,-7 -6,0 0,7 z" />
+    <path class="abs dpad corner" id="abs-left-up" data-button="left up"
+    	data-axis-x="32768" data-axis-y="-32767"
+    	d="m -3,-3 -7,0 0,-4 3,-3 4,0 z" />
   </g>
 
-  <g>
-    <rect class="btn" id="btn-start" data-button="start" width="40" height="30" x="180" y="10" fill="#ff0000" />
-    <text class="notouch" x="200" y="22">START</text>
-    <rect class="btn" id="btn-select" data-button="select" width="40" height="30" x="260" y="10" fill="#ff0000" />
-    <text class="notouch" x="280" y="22">SELECT</text>
+  <g transform="translate(220, 5)">
+    <rect class="btn" id="btn-start" data-button="start" width="40" height="30" x="-40" y="0" fill="#ff0000" />
+    <text class="notouch" x="-20" y="20">START</text>
+    <rect class="btn" id="btn-select" data-button="select" width="40" height="30" x="40" y="0" fill="#ff0000" />
+    <text class="notouch" x="60" y="20">SELECT</text>
   </g>
 
-  <g>
-    <circle class="btn" id="btn-y" data-button="y" cx="240" cy="70" r="25" />
-    <text class="notouch" x="240" y="70">Y</text>
-    <circle class="btn" id="btn-b" data-button="b" cx="240" cy="150" r="25" />
-    <text class="notouch" x="240" y="150">B</text>
-    <circle class="btn" id="btn-x" data-button="x" cx="200" cy="110" r="25" />
-    <text class="notouch" x="200" y="110">X</text>
-    <circle class="btn" id="btn-a" data-button="a" cx="280" cy="110" r="25" />
-    <text class="notouch" x="280" y="110">A</text>
+  <g transform="translate(240, 110)">
+    <circle class="btn" id="btn-y" data-button="y" cx="0" cy="-40" r="25" />
+    <text class="notouch" x="0" y="-40">Y</text>
+    <circle class="btn" id="btn-b" data-button="b" cx="0" cy="40" r="25" />
+    <text class="notouch" x="0" y="40">B</text>
+    <circle class="btn" id="btn-x" data-button="x" cx="-40" cy="0" r="25" />
+    <text class="notouch" x="-40" y="0">X</text>
+    <circle class="btn" id="btn-a" data-button="a" cx="40" cy="0" r="25" />
+    <text class="notouch" x="40" y="0">A</text>
   </g>
 
   <g transform="scale(0.5, 0.5)">
@@ -85,5 +167,5 @@
     
   </g>
 
-  <text class="value" data-key="lag" class="notouch" x="160" y="160"></text>
+  <text class="value notouch" data-key="lag" x="160" y="160"></text>
 </svg>

@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 
 	"github.com/codegangsta/cli"
 	"github.com/codegangsta/negroni"
@@ -122,15 +121,14 @@ func main() {
 }
 
 type InputEvent struct {
-	Axis   string      `json:"a"`
-	Button string      `json:"b"`
-	Value  json.Number `json:"v"`
-	Time   json.Number `json:"t"`
+	Key   string      `json:"k"`
+	Value json.Number `json:"v"`
+	Time  json.Number `json:"t"`
 }
 
 func HandleConn(input *Input, conn *websocket.Conn) {
-	var ev InputEvent
 	for {
+		var ev InputEvent
 		err := conn.ReadJSON(&ev)
 		log.Printf("%#v", ev)
 
@@ -146,37 +144,43 @@ func HandleConn(input *Input, conn *websocket.Conn) {
 		}
 		var v = int(v64)
 
-		switch ev.Axis {
-		case "x":
-			input.SendAbs(AxisX, v)
-		case "y":
-			input.SendAbs(AxisY, v)
-		}
-
-		buttons := strings.Split(ev.Button, " ")
-		for _, button := range buttons {
-			switch button {
-			case "start":
-				input.SendKey(BtnStart, v)
-			case "select":
-				input.SendKey(BtnSelect, v)
-			case "a":
-				input.SendKey(BtnA, v)
-			case "b":
-				input.SendKey(BtnB, v)
-			case "x":
-				input.SendKey(BtnX, v)
-			case "y":
-				input.SendKey(BtnY, v)
-			case "forward":
-				input.SendKey(BtnForward, v)
-			case "back":
-				input.SendKey(BtnBack, v)
-			case "left":
-				input.SendKey(BtnLeft, v)
-			case "right":
-				input.SendKey(BtnRight, v)
-			}
+		switch ev.Key {
+		case "abs:x":
+			input.SendAbs(AbsX, v)
+		case "abs:y":
+			input.SendAbs(AbsY, v)
+		case "abs:rx":
+			input.SendAbs(AbsRX, v)
+		case "abs:ry":
+			input.SendAbs(AbsRY, v)
+		case "btn:start":
+			input.SendKey(BtnStart, v)
+		case "btn:select":
+			input.SendKey(BtnSelect, v)
+		case "btn:a":
+			input.SendKey(BtnA, v)
+		case "btn:b":
+			input.SendKey(BtnB, v)
+		case "btn:x":
+			input.SendKey(BtnX, v)
+		case "btn:y":
+			input.SendKey(BtnY, v)
+		case "btn:forward":
+			input.SendKey(BtnForward, v)
+		case "btn:back":
+			input.SendKey(BtnBack, v)
+		case "btn:left":
+			input.SendKey(BtnLeft, v)
+		case "btn:right":
+			input.SendKey(BtnRight, v)
+		case "btn:dpad-up":
+			input.SendKey(BtnDpadUp, v)
+		case "btn:dpad-down":
+			input.SendKey(BtnDpadDown, v)
+		case "btn:dpad-left":
+			input.SendKey(BtnDpadLeft, v)
+		case "btn:dpad-right":
+			input.SendKey(BtnDpadRight, v)
 		}
 
 		conn.WriteJSON(struct {

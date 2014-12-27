@@ -5,6 +5,29 @@ document.body.addEventListener('touchmove', function(event) {
 }, false); 
 
 window.addEventListener("load", function() {
+    function requestFullscreen(el) {
+        if(el.webkitRequestFullscreen) {
+            return el.webkitRequestFullscreen();
+        }
+    };
+
+    function exitFullscreen() {
+        var el = (
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement);
+        if(el.webkitExitFullscreen) {
+            return el.webkitExitFullscreen();
+        }
+    };
+
+    function isFullscreen() {
+        return !!(
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement);
+    };
+
     var axis = {x: 0, y: 0},
         fuzz = 2048,
         domain = window.location.href;
@@ -36,6 +59,7 @@ window.addEventListener("load", function() {
             postMessage({a: "y", v: value.y}, domain);
         }
     };
+
 
     AbsPad.prototype.onMove = function(x, y) {
         var element = this.element,
@@ -79,235 +103,223 @@ window.addEventListener("load", function() {
         nubElement.setAttribute("transform", "translate(" + tx + "," + ty + ")");
     };
 
-    function Button(el) {
+    function ButtonWidget(el) {
         var self = this;
-        this.value = 0;
         this.element = el;
         this.buttons = el.getAttribute("data-button").split(" ");
     };
 
-    Button.prototype.onMove = function(x, y) {
-        if(this.value == 1) {
-            return;
-        }
-        this.value = 1;
-        var element = this.element,
-            buttons = this.buttons;
-        element.classList.add("on");
-        for(var i = 0; i < buttons.length; i++) {
-            postMessage({
-                t: +(new Date()),
-                b: buttons[i],
-                v: this.value,
-            }, domain);
-        }
-    };
-
-    Button.prototype.onEnd = function() {
-        if(this.value == 0) {
-            return;
-        }
-        this.value = 0;
-        var element = this.element,
-            buttons = this.buttons;
-        element.classList.remove("on");
-        for(var i = 0; i < buttons.length; i++) {
-            postMessage({
-                t: +(new Date()),
-                b: buttons[i],
-                v: this.value,
-            }, domain);
+    ButtonWidget.prototype.putState = function(lastState, state, p) {
+        var buttons = this.buttons,
+            el = this.element;
+        if(p) {
+            for(var i = 0; i < buttons.length; i++) {
+                var k  = buttons[i];
+                state["btn:" + k] = 1;
+            }
+        } else {
+            for(var i = 0; i < buttons.length; i++) {
+                var k  = buttons[i];
+                if(lastState["btn:" + k] && !state["btn:" + k]) {
+                    state["btn:" + k] = 0;
+                }
+            }
         }
     };
 
-    function Value(el) {
+    ButtonWidget.prototype.readState = function(state) {
+        var buttons = this.buttons,
+            el = this.element;
+        el.classList.add("on");
+        for(var i = 0; i < buttons.length; i++) {
+            var k = buttons[i],
+                s = state["btn:" + k];
+            if(!s) {
+                el.classList.remove("on");
+                return;
+            }
+        }
+    };
+    
+    // AbsWidget is a button that contains values for one or more absolute
+    // axis.
+    function AbsWidget(el) {
+        var self = this;
+        this.element = el;
+
+        // Read values for all known axis
+        var axis = ["x", "y", "rx", "ry"];
+        this.axis = {};
+        for(var i = 0; i < axis.length; i++) {
+            var a = axis[i];
+            var attrValue = el.getAttribute("data-axis-" + a);
+            if(attrValue !== null) {
+                this.axis[a] = parseInt(attrValue, 0);
+            }
+        };
+    };
+
+    AbsWidget.prototype.putState = function(lastState, state, p) {
+        var axis = this.axis,
+            el = this.element;
+        if(p) {
+            el.classList.add("on");
+            for(var k in axis) {
+                if(!state["abs:" + k]) {
+                    state["abs:" + k] = 0;
+                }
+                state["abs:" + k] += axis[k];
+            }
+        } else {
+            el.classList.remove("on");
+            for(var k in axis) {
+                if(lastState["abs:" + k]  && !state["abs:" + k]) {
+                    state["abs:" + k] = 0;
+                }
+            }
+        }
+    };
+
+    AbsWidget.prototype.readState = function(state) {
+    };
+    
+    // ValueWidget
+    function ValueWidget(el) {
         var self = this;
         this.element = el;
         this.key = el.getAttribute("data-key");
     };
 
-    Value.prototype.update = function(data) {
-        var v = data[this.key];
-        if(v === undefined) {
-            return false;
-        }
-        this.element.innerHTML(v);
+    ValueWidget.prototype.clearState = function(lastState, state, p) {
     };
 
-    function requestFullscreen(el) {
-        if(el.webkitRequestFullscreen) {
-            return el.webkitRequestFullscreen();
-        }
+    ValueWidget.prototype.putState = function(data, p) {
     };
 
-    function exitFullscreen() {
-        var el = (
-            document.fullscreenElement ||
-            document.webkitFullscreenElement ||
-            document.mozFullScreenElement);
-        if(el.webkitExitFullscreen) {
-            return el.webkitExitFullscreen();
-        }
+    ValueWidget.prototype.readState = function(state) {
     };
 
-    function isFullscreen() {
-        return !!(
-            document.fullscreenElement ||
-            document.webkitFullscreenElement ||
-            document.mozFullScreenElement);
-    };
-
-    var svg = document.getElementById("svg");
-
-    var svgDoc = svg.contentDocument;
+    var svg = document.getElementById("svg"),
+        svgDoc = svg.contentDocument;
     
-    var buttons = {},
-        pads = {},
-        values = {};
+    var widgets = {};
 
-    // hook up buttons
-    var buttonEls = svgDoc.getElementsByClassName("btn");
-    for(var i = 0; i < buttonEls.length; i++) {
-        var el = buttonEls[i];
-        if(el.id) {
-            buttons[el.id] = new Button(el);
+    var widgetTypes = {
+        "btn": function(el) { return new ButtonWidget(el); },
+        //"pad": function(el) { return null; },
+        "value": function(el) { return new ValueWidget(el); },
+        "abs": function(el) { return new AbsWidget(el); },
+        //"option": function(el) { return null },
+    };
+
+    // Populate widgets map
+    for(var className in widgetTypes) {
+        var ctor = widgetTypes[className];
+        var els = svgDoc.getElementsByClassName(className);
+        for(var i = 0; i < els.length; i++) {
+            var el = els[i];
+            if(el.id) {
+                widgets[el.id] = ctor(el);
+            }
         }
     }
 
-    // hook up pads
-    var padEls = svgDoc.getElementsByClassName("pad");
-    for(var i = 0; i < padEls.length; i++) {
-        var el = padEls[i];
-        if(el.id) {
-            pads[el.id] = new AbsPad(el);
-        }
-    }
-
-    // hook up values
-    var valueEls = svgDoc.getElementsByClassName("value");
-    for(var i = 0; i < valueEls.length; i++) {
-        var el = valueEls[i];
-        if(el.id) {
-            values[el.id] = new Value(el);
-        }
-    }
-
-    var optionEls = svgDoc.getElementsByClassName("option");
-    for(var i = 0; i < optionEls.length; i++) {
-        var el = optionEls[i],
-            option = el.getAttribute("data-option");
-        switch(option) {
-            case "fullscreen":
-                el.addEventListener("click", function(evt) {
-                    if(isFullscreen()) {
-                        exitFullscreen(svg);
-                    } else {
-                        requestFullscreen(svg);
-                    }
-                });
-        }
-    }
-    
-    var touchedIds = {};
-
-    var onTouchMove = function(evt) {
+    // getTouchPoints returns a list of points touched by the given event.
+    var getTouchPoints = function(evt) {
         // Accumulate list of finger positions
-        var touches = [],
-            untouches = [];
+        var rv = [];
         if(evt.touches) {
             // Some kind of touch event
             var evtTouches = evt.touches;
             for(var i = 0; evtTouches && i < evtTouches.length; i++) {
                 var t = evtTouches[i];
-                touches.push({x: t.clientX, y: t.clientY});
-            }
-            if(evt.type == "touchend" || evt.type == "touchcancel") {
-                evtTouches = evt.changedTouches;
-                for(var i = 0; evtTouches && i < evtTouches.length; i++) {
-                    var t = evtTouches[i];
-                    untouches.push({x: t.clientX, y: t.clientY});
-                }
+                console.log(t.radiusX, t.radiusY, t.force);
+                rv.push({
+                    x: t.clientX - t.radiusX / 2, 
+                    y: t.clientY - t.radiusY / 2,
+                    w: t.radiusX,
+                    h: t.radiusY,
+                });
             }
         } else {
             // Mouse event
             switch(evt.type) {
                 case "mousedown":
                 case "mousemove":
-                    touches.push({x: evt.clientX, y: evt.clientY});
-                    break;
-                case "mouseup":
-                    untouches.push({x: evt.clientX, y: evt.clientY});
-                    break;
-            }
-        }
-
-
-        // Gather touched element IDs
-        var nowTouchedIds = {};
-        var ids = Object.keys(touchedIds);
-        for(var i = 0; i < touches.length; i++) {
-            var p = touches[i],
-                el = svgDoc.elementFromPoint(p.x, p.y),
-                id = el.id;
-            nowTouchedIds[id] = true;
-            if(!touchedIds[id]) {
-                ids.push(id);
-            }
-        }
-
-        // Mark previously active buttons
-        var values = {};
-        for(var id in touchedIds) {
-            var button = buttons[id];
-            if(button) {
-                var names = button.buttons;
-                button.element.classList.remove("on");
-                for(var i = 0; i < names.length; i++) {
-                    var name = names[i];
-                    values[name] = 0; // now inactive
-                }
-            }
-        }
-
-        // Update values with current buttons
-        for(var id in nowTouchedIds) {
-            var button = buttons[id];
-            if(button) {
-                button.element.classList.add("on");
-                var names = button.buttons;
-                for(var i = 0; i < names.length; i++) {
-                    var name = names[i];
-                    if(values[name] == 0) {
-                        values[name] = -1; // no change
-                    } else {
-                        values[name] = 1; // now active
+                    if(evt.which) {
+                        rv.push({
+                            x: evt.clientX,
+                            y: evt.clientY,
+                        });
                     }
+                    break;
+            }
+        }
+        return rv;
+    };
+
+
+    var lastState = {};
+    var onTouchMove = function(evt) {
+        var points = getTouchPoints(evt);
+        var state = {};
+
+        // Iterate through touch points
+        var touched = {};
+        for(var i = 0; i < points.length; i++) {
+            var p = points[i];
+
+            var el = svgDoc.elementFromPoint(p.x, p.y);
+            touched[el.id] = p;
+
+            if(p.w && p.h) {
+                // Find all elements within contact area
+                var d = svgDoc.documentElement,
+                    r = d.createSVGRect();
+                r.x = p.x;
+                r.y = p.y;
+                r.width = p.w;
+                r.height = p.h;
+                var els = d.getIntersectionList(r, null);
+                for(var i = 0; i < els.length; i++) {
+                    touched[els[i].id] = p;
                 }
             }
         }
 
-        // Send changes
+        for(var id in widgets) {
+            var widget = widgets[id];
+            if(!widget) {
+                continue;
+            }
+            var p = touched[id];
+            widget.putState(lastState, state, touched[id]);
+        }
+
+        for(var id in widgets) {
+            var widget = widgets[id];
+            widget.readState(state);
+        }
+
         var now = +(new Date());
-        for(var name in values) {
-            var v = values[name];
-            if(v == 0 || v == 1) {
+        for(var k in state) {
+            var v = state[k];
+            if(state[k] != lastState[k]) {
                 postMessage({
-                    b: name,
+                    k: k,
                     v: v,
                     t: now,
                 }, domain);
             }
         }
 
-        touchedIds = nowTouchedIds;
+        lastState = state;
     };
 
     svgDoc.addEventListener("touchstart", onTouchMove);
     svgDoc.addEventListener("touchmove", onTouchMove);
     svgDoc.addEventListener("touchend", onTouchMove);
-    //svgDoc.addEventListener("mousedown", onTouchMove);
-    //svgDoc.addEventListener("mousemove", onTouchMove);
-    //svgDoc.addEventListener("mouseup", onTouchEnd);
+    svgDoc.addEventListener("mousemove", onTouchMove);
 });
 
 
@@ -365,15 +377,7 @@ window.addEventListener("load", function() {
     function onMessage(evt) {
         console.log(evt.data);
         var data = evt.data;
-        if(data.axis) {
-            var throttle = throttles[data.axis] = 
-                throttles[data.axis] || _.throttle(function(data) {
-                conn.send(JSON.stringify(data));
-            }, 20);
-            throttle(data);
-        } else {
-            conn.send(JSON.stringify(data));
-        }
+        conn.send(JSON.stringify(data));
     };
 
     function wire() {
