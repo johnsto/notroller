@@ -1,0 +1,6 @@
+{
+    "name": "retro-analog",
+    "type": "gamepad",
+    "title": "Retro Controller (Analog)",
+    "description": "Retro gamepad with digital buttons and an analog DPad."
+}

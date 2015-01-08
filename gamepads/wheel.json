@@ -1,0 +1,13 @@
+{
+    "name": "wheel",
+    "type": "wheel",
+    "title": "Steering Wheel",
+    "description": "Drive with the orientation sensors on your device.",
+    "orientation": {
+        "beta": {
+            "abs:x": true,
+            "output": [-100, 100],
+            "input": [-45, 45],
+        }
+    }
+}

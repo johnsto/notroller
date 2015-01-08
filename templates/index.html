@@ -2,18 +2,34 @@
 <html>
 	<head>
 		<title>GoStick</title>
-		<link rel="stylesheet" href="main.css" />
-		<meta name="viewport" content="initial-scale=1, user-scalable=0">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/css/bootstrap-theme.min.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	</head>
-	<body class="flex" style="flex-direction: column;">
-		<div style="flex: 0 1 auto;" class="title">GoStick</div>
-		<div style="flex: 0 1 auto;" class="header">Select a port</div>
-		<div style="flex: 5 5 auto;" class="port-selector">
-			{{ range $i, $e := .Ports }}
-			<a href="/{{$e}}" class="btn" style="flex: 1 1 auto;">
-				{{ $e }}
-			</a>
-			{{ end }}
+	<body>
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">GoStick</a>
+				</div>
+				<div class="collapse navbar-collapse">
+				</div>
+			</div>
+		</nav>
+		<div class="container">
+			<h2>Select Input</h2>
+			<table class="table">
+				<tbody>
+				{{ range $i, $e := .Ports }}
+					<tr>
+						<td>
+							<a href="/{{$e}}" class="btn btn-lg btn-primary pull-right"><span class="glyphicon glyphicon-chevron-right"></span></a>
+							<h4>GoStick #{{$e}}</h4>
+						</td>
+					</tr>
+				{{ end }}
+				</tbody>
+			</table>
 		</div>
 	</body>
 </html>

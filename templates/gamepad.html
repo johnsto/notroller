@@ -2,18 +2,92 @@
 <html>
 	<head>
 		<title>GoStick</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<link rel="stylesheet" href="main.css" />
 		<meta name="viewport" content="initial-scale=1, user-scalable=0">
 	</head>
 	<body>
-		<div style="width: 100vw; height: 100vh;">
-			<object 
-				type="image/svg+xml" data="gamepad.svg"
-				id="svg" width="100%" height="100%"
-				style="width: 100vw; height: 100vh;"
-			></object>
+		<div class="flex flex-col fullscreen">
+			<div class="flex-start text-center">
+				<h3 id="gamepad-title" style="margin: 0.5em 0 0;"></h3>
+				<div id="gamepad-desc" style="margin: 0 0 0.5em;"></div>
+			</div>
+			<div class="flex-middle flex flex-row">
+				<button class="btn btn-link flex-start" id="nav-left" style="min-width: 1.5em; font-size: 4em;">
+					&lsaquo;
+				</button>
+				<div class="flex-middle frame-container">
+					<object 
+						type="image/svg+xml"
+						id="gamepad" 
+						class="frame gamepad"
+						width="100%"
+						height="100%"
+					></object>
+				</div>
+				<button class="btn btn-link flex-end" id="nav-right" style="min-width: 1.5em; font-size: 4em;">
+					&rsaquo;
+				</button>
+			</div>
+			<div class="flex-end text-center" style="margin: 0.5em 0;">
+				<button class="btn btn-default" id="nav-select">Connect</button>
+			</div>
 		</div>
 
 		<script src="js/main.js"></script>
+		<script src="js/widgets.js"></script>
+		<script>
+			(function() {
+				var gamepads = {{ .Gamepads }},
+					gamepadNo = 0,
+					gamepadEl = document.getElementById("gamepad"),
+					gamepadTitleEl = document.getElementById("gamepad-title"),
+					gamepadDescEl = document.getElementById("gamepad-desc");
+
+				function selectGamepad(gamepad) {
+					gamepadEl.setAttribute("data", gamepad.name + ".svg");
+					gamepadTitleEl.innerHTML = gamepad.title;
+					gamepadDescEl.innerHTML = gamepad.description;
+				};
+
+				function navGamepad(n) {
+					gamepadNo = (gamepadNo + n + gamepads.length) % gamepads.length;
+					selectGamepad(gamepads[gamepadNo]);
+				};
+
+				navGamepad(0);
+
+				document.getElementById("nav-left").addEventListener("click",
+					function(evt) {
+						navGamepad(-1);
+					}
+				);
+
+				document.getElementById("nav-right").addEventListener("click",
+					function(evt) {
+						navGamepad(1);
+					}
+				);
+	
+				var stick;
+				document.getElementById("nav-select").addEventListener("click",
+					function(evt) {
+						var el = gamepadEl;
+						if(el.webkitRequestFullscreen) {
+							el.webkitRequestFullscreen();
+						}
+
+						if(stick) {
+							stick.detach();
+						}
+						stick = new gostick.GoStick({
+							element: gamepadEl,
+							vibration: true,
+						});
+						stick.attach();
+					}
+				);
+			})();
+		</script>
 	</body>
 </html>

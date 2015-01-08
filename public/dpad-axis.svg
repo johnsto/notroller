@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   width="160"
+   height="160"
+   viewBox="0 0 160 160"
+   preserveAspectRatio="xMidYMid meet"
+   id="svg3119"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="dpad-axis.svg">
+  <metadata
+     id="metadata3133">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1021"
+     id="namedview3131"
+     showgrid="true"
+     inkscape:zoom="5.2125"
+     inkscape:cx="42.494005"
+     inkscape:cy="80"
+     inkscape:window-x="0"
+     inkscape:window-y="33"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg3119">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3135" />
+  </sodipodi:namedview>
+  <defs
+     id="defs3121">
+    <style
+       id="style3123">
+    .dpad {
+			fill: #000;
+    }
+    .notouch {
+      pointer-events: none;
+    }
+  </style>
+  </defs>
+  <g
+     transform="translate(80, 80)"
+     id="g3125">
+    <ellipse
+       class="abs dpad"
+       id="abs-left"
+       data-axis-x="-32767"
+       rx="25"
+       ry="15"
+       cx="-40"
+       cy="0"
+       d="m -15,0 c 0,8.2842712 -11.192881,15 -25,15 -13.807119,0 -25,-6.7157288 -25,-15 0,-8.2842712 11.192881,-15 25,-15 13.807119,0 25,6.7157288 25,15 z" />
+    <ellipse
+       class="abs dpad"
+       id="abs-right"
+       data-axis-x="32768"
+       rx="25"
+       ry="15"
+       cx="40"
+       cy="0"
+       d="M 65,0 C 65,8.2842712 53.807119,15 40,15 26.192881,15 15,8.2842712 15,0 c 0,-8.2842712 11.192881,-15 25,-15 13.807119,0 25,6.7157288 25,15 z" />
+    <ellipse
+       class="abs dpad"
+       id="abs-up"
+       data-axis-y="-32767"
+       rx="15"
+       ry="25"
+       cx="0"
+       cy="-40"
+       d="m 15,-40 c 0,13.807119 -6.7157288,25 -15,25 -8.2842712,0 -15,-11.192881 -15,-25 0,-13.807119 6.7157288,-25 15,-25 8.2842712,0 15,11.192881 15,25 z" />
+    <ellipse
+       class="abs dpad"
+       id="abs-down"
+       data-axis-y="32768"
+       rx="15"
+       ry="25"
+       cx="0"
+       cy="40"
+       d="M 15,40 C 15,53.807119 8.2842712,65 0,65 -8.2842712,65 -15,53.807119 -15,40 -15,26.192881 -8.2842712,15 0,15 8.2842712,15 15,26.192881 15,40 z" />
+  </g>
+</svg>
+<!-- vim: ts=2 et=1 sw=2: -->
+

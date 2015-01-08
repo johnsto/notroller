@@ -2,62 +2,90 @@ html {
 	font-family: sans-serif;
 	user-select: none;
 	webkit-user-select: none;
-	overflow: hidden;
 	height: 100%;
 	padding: 0;
 	margin: 0;
 }
 
 body {
+	background: #333;
+	color: #eee;
 	overflow: hidden;
 	height: 100%;
 	padding: 0;
 	margin: 0;
+	font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
-.title {
-	background: #333;
-	color: #fff;
-	padding: 0.5em;
-}
-.header {
-	text-align: center;
-	padding: 1em;
+.gamepad {
 }
 
-.btn {
-	background: #999;
-	color: #fff;
-	border: none;
-	text-decoration: none;
+.gamepad:-webkit-full-screen {
+	width: 100vw;
+	height: 100vh;
 }
-.btn:hover {
-	background: #333;
-	color: #ccc;
+
+.fullscreen {
+	width: 100%;
+	height: 100%;
 }
-.btn:active {
-	background: #000;
-	color: #fff;
+
+.options {
 }
 
 .flex {
 	display: flex;
 }
-.port-selector {
-	display: flex;
+
+.flex-col {
+	flex-direction: column;
 }
-.port-selector > a {
-	font-size: 1.5em;
+
+.flex-row {
+	flex-direction: row;
 }
-.port-selector > a:nth-child(1) {
-	background: #03A9F4;
+
+.flex-start,
+.flex-end {
+	flex: 0 1 auto;
 }
-.port-selector > a:nth-child(2) {
-	background: #8BC34A;
+
+.flex-middle {
+	flex: 1 1 auto;
 }
-.port-selector > a:nth-child(3) {
-	background: #FFC107;
+
+.text-center {
+	text-align: center;
 }
-.port-selector > a:nth-child(4) {
-	background: #795548;
+
+button.btn {
+	background: transparent;
+	color: #fff;
+	border: none;
+}
+
+button.btn:hover {
+	background: #777;
+}
+
+button.btn:active {
+	background: #ccc;
+	color: #333;
+}
+
+button.btn-default {
+	background: #555;
+	padding: 0.75em 1.5em;
+	border: 1pxx solid #999;
+}
+
+.frame-container {
+	position: relative;
+}
+.frame-container .frame {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
 }

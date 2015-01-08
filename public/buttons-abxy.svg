@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns="http://www.w3.org/2000/svg" version="1.1"
+   width="160" height="160" viewBox="0 0 160 160"
+   preserveAspectRatio="xMidYMid meet">
+  <defs>
+  	<style><![CDATA[
+		.btn {
+			fill: #000;
+		}
+		text {
+			fill: #fff;
+			text-anchor: middle;
+		}
+		.notouch {
+			pointer-events: none;
+		}
+	]]></style>
+  </defs>
+  <g transform="translate(80, 80)">
+    <circle class="btn" id="btn-y" data-button="y" cx="0" cy="-40" r="25" />
+    <text class="notouch" x="0" y="-40">Y</text>
+    <circle class="btn" id="btn-b" data-button="b" cx="0" cy="40" r="25" />
+    <text class="notouch" x="0" y="40">B</text>
+    <circle class="btn" id="btn-x" data-button="x" cx="-40" cy="0" r="25" />
+    <text class="notouch" x="-40" y="0">X</text>
+    <circle class="btn" id="btn-a" data-button="a" cx="40" cy="0" r="25" />
+    <text class="notouch" x="40" y="0">A</text>
+  </g>
+</svg>
+<!-- vim: ts=2 et=1 sw=2: -->

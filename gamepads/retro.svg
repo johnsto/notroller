@@ -1,0 +1,53 @@
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg id="svg4111" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 176" height="100%" width="100%" version="1.1" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/">
+ <metadata id="metadata4116">
+  <rdf:RDF>
+   <cc:Work rdf:about="">
+    <dc:format>image/svg+xml</dc:format>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:title/>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs id="defs4608">
+  <style id="style4610">svg {
+	 }
+	 text {
+			pointer-events: none;
+	 }
+	 .btn.dpad {
+		fill: transparent;
+		opacity: 0.5;
+	 }
+	 .btn.on {
+		fill: #333;
+		stroke: #111;
+	 }</style>
+ </defs>
+ <rect id="rect4477" height="176" width="320" y="-5.5828E-15" x="0" fill="#bfbfbf"/>
+ <rect id="rect4479" height="112" width="304" y="48" x="8" fill="#3f3f3f"/>
+ <rect id="rect4481" ry="8" height="48" width="48" stroke="#7f7f7f" y="104" x="256" fill="#e6e6e6"/>
+ <rect id="rect4483" ry="8" height="48" width="48" stroke="#7f7f7f" y="104" x="200" fill="#dfdfdf"/>
+ <path id="btn-a" d="m244,128a20,20,0,0,1,-40,0,20,20,0,1,1,40,0z" data-button="a" data-vibrate="20" stroke="#aa0000" stroke-width="1.11803401" class="btn touch" fill="#ff2a2a"/>
+ <path id="btn-b" d="m300,128a20,20,0,0,1,-40,0,20,20,0,1,1,40,0z" data-button="b" data-vibrate="20" stroke="#aa0000" stroke-width="1.11803401" class="btn touch" fill="#ff2a2a"/>
+ <path id="rect4144" fill="#dfdfdf" stroke="#7f7f7f" d="m56,56c-4.432,0-8,3.568-8,8v24h-24c-4.432,0-8,3.568-8,8v16c0,4.432,3.568,8,8,8h24v24c0,4.432,3.568,8,8,8h16c4.432,0,8-3.568,8-8v-24h24c4.432,0,8-3.568,8-8v-16c0-4.432-3.568-8-8-8h-24v-24c0-4.432-3.568-8-8-8h-16z"/>
+ <rect id="rect4488" ry="4" height="32" width="72" y="116" x="120" fill="#dfdfdf"/>
+ <rect id="rect4490" ry="4" height="32" width="72" y="80" x="120" fill="#dfdfdf"/>
+ <rect id="btn-start" class="btn touch" ry="8" data-button="start" data-vibrate="20" height="16" width="56" y="92" x="128" fill="#2f2f2f"/>
+ <rect id="btn-select" class="btn touch" ry="8" data-button="select" data-vibrate="20" height="16" width="56" y="128" x="128" fill="#2f2f2f"/>
+ <text id="text4494" style="letter-spacing:0px;word-spacing:0px;" font-family="Sans" transform="scale(1.1899646,0.84036114)" xml:space="preserve" font-size="33.61444473px" font-style="normal" y="107.6546" x="131.01591" font-weight="normal" line-height="125%" fill="#000000"><tspan id="tspan4156" style="text-anchor:middle;text-align:center;" font-family="Liberation Sans Narrow" font-size="11.76505661px" font-style="normal" font-stretch="condensed" font-variant="normal" y="107.6546" x="131.01591" font-weight="bold" fill="#ff2a2a">START</tspan></text>
+ <path id="path4497" fill="#2f2f2f" d="m56,60c-2.216,0-4,1.784-4,4v28h-28c-2.216,0-4,1.784-4,4v16c0,2.216,1.784,4,4,4h28v28c0,2.216,1.784,4,4,4h16c2.216,0,4-1.784,4-4v-28h28c2.216,0,4-1.784,4-4v-16c0-2.216-1.784-4-4-4h-28v-28c0-2.216-1.784-4-4-4h-16z"/>
+ <text id="text4499" style="letter-spacing:0px;word-spacing:0px;" font-family="Sans" transform="scale(1.1899645,0.8403612)" xml:space="preserve" font-size="33.61444855px" font-style="normal" y="150.49355" x="131.01591" font-weight="normal" line-height="125%" fill="#000000"><tspan id="tspan4188" style="text-anchor:middle;text-align:center;" font-family="Liberation Sans Narrow" font-size="11.76505661px" font-style="normal" font-stretch="condensed" font-variant="normal" y="150.49355" x="131.01591" font-weight="bold" fill="#ff2a2a">SELECT</tspan></text>
+ <text id="text4502" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-family="Sans" xml:space="preserve" font-size="40px" font-style="normal" y="135.29004" x="224" font-weight="normal" fill="#ffffff"><tspan id="tspan4192" style="text-anchor:middle;text-align:center;" font-size="20px" y="135.29004" x="224" fill="#ffffff">A</tspan></text>
+ <text id="text4505" style="letter-spacing:0px;word-spacing:0px;" line-height="125%" font-family="Sans" xml:space="preserve" font-size="40px" font-style="normal" y="135.29004" x="279.72168" font-weight="normal" fill="#ffffff"><tspan id="tspan4196" style="text-anchor:middle;text-align:center;" font-size="20px" y="135.29004" x="279.72168" fill="#ffffff">B</tspan></text>
+ <path id="path4508" fill="#dfdfdf" d="m120,48,0,22.844c0,2.849,2.31,5.156,5.16,5.156h61.688c2.84,0,5.15-2.307,5.15-5.156v-22.844h-72z"/>
+ <path id="path4510" fill="#dfdfdf" d="m124,152c-2.216,0-4,1.784-4,4v4h72v-4c0-2.216-1.784-4-4-4h-64z"/>
+ <path id="path4512" fill="#7f7f7f" d="m56,128,16,0-8,12z"/>
+ <path id="path4514" fill="#7f7f7f" d="M56,80,72,80,64,68z"/>
+ <path id="path4516" fill="#7f7f7f" d="m40,96,0,16-12-8z"/>
+ <path id="path4518" fill="#7f7f7f" d="m88,96,0,16,12-8z"/>
+ <path id="dpad-left" opacity="0.5" d="m40,96,0,16-16,0,0-16z" data-button="dpad-left" class="btn touch dpad"/>
+ <path id="dpad-up" opacity="0.5" d="m72,64,0,16-16,0,0-16z" data-button="dpad-up" class="btn touch dpad"/>
+ <path id="dpad-right" opacity="0.5" d="m104,96,0,16-16,0,0-16z" data-button="dpad-right" class="btn touch dpad"/>
+ <path id="dpad-down" opacity="0.5" d="m72,128,0,16-16,0,0-16z" data-button="dpad-down" class="btn touch dpad"/>
+</svg>
