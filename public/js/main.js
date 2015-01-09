@@ -99,15 +99,9 @@ var gostick = {};
             input = this.input;
 
         return function(evt) {
-            var ev = {
-                alpha: Math.round(evt.alpha),
-                beta: Math.round(evt.beta),
-                gamma: Math.round(evt.gamma),
-            };
-
-            input.alpha = alpha;
-            input.beta = beta;
-            input.gamma = gamma;
+            input.alpha = Math.round(evt.alpha),
+            input.beta = Math.round(evt.beta),
+            input.gamma = Math.round(evt.gamma),
 
             self.onInputChanged(["alpha", "beta", "gamma"]);
         };
@@ -131,15 +125,14 @@ var gostick = {};
     // getTouchedWidgets returns a map of where each key is an element ID
     // touched by a point in points, and the value is a position at which
     // which the touch occured.
-    function getTouchedWidgets(points) {
-        var svgDoc = this.svgDoc,
+    function getTouchedWidgets(doc, points) {
         var rv = {};
 
         for(var i = 0; i < points.length; i++) {
             var p = points[i];
 
             // Always add element directly below touch point
-            var el = svgDoc.elementFromPoint(p.x, p.y);
+            var el = doc.elementFromPoint(p.x, p.y);
             if(!el) {
                 continue;
             }
@@ -147,13 +140,13 @@ var gostick = {};
 
             if(p.w && p.h) {
                 // Find all elements within rectangular contact area
-                var d = svgDoc.documentElement,
+                var docEl = doc.documentElement,
                     r = d.createSVGRect();
                 r.x = p.x;
                 r.y = p.y;
                 r.width = p.w;
                 r.height = p.h;
-                var els = d.getIntersectionList(r, null);
+                var els = docEl.getIntersectionList(r, null);
                 for(var j = 0; j < els.length; j++) {
                     rv[els[j].id] = p;
                 }
@@ -171,12 +164,14 @@ var gostick = {};
             svgDoc = this.svgDoc,
             widgets = this.widgets,
             touchWidgets = this.touchWidgets,
-            orientationWidgets = this.orientationWidgets;
+            orientationWidgets = this.orientationWidgets,
+            input = this.input;
 
-        var state = {};
+        var state = {},
+            lastState = this.lastState || {};
 
         // Fire touch/untouch events
-        var touchedIds = getTouchedWidgets(touchWidgets);
+        var touchedIds = getTouchedWidgets(svgDoc, input.points);
         for(var id in touchedIds) {
             var w = touchWidgets[id],
                 p = touchedIds[id];
@@ -193,9 +188,9 @@ var gostick = {};
 
         // Fire orientation events
         var ev = {
-            alpha: Math.round(evt.alpha),
-            beta: Math.round(evt.beta),
-            gamma: Math.round(evt.gamma),
+            alpha: input.alpha,
+            beta: input.beta,
+            gamma: input.gamma,
         };
         for(var id in orientationWidgets) {
             var w = orientationWidgets[id];
@@ -207,6 +202,29 @@ var gostick = {};
             var w = widgets[id];
             w.onUpdate(state);
         }
+
+        var keys = Object.keys(lastState);
+        for(var k in state) {
+            if(!lastState[k]) {
+                keys.push(k);
+            }
+        }
+
+        for(var i = 0; i < keys.length; i++) {
+            var k = keys[i];
+            var last = lastState[k],
+                curr = state[k],
+                v = curr ? curr : 0;
+            console.log(k, last, curr);
+            if(last != curr) {
+                postMessage({
+                    k: k,
+                    v: v,
+                }, domain);
+            }
+        }
+
+        this.lastState = state;
     };
 
     function foo() {

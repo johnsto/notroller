@@ -1,6 +1,47 @@
 {
+    "version": 1,
     "name": "retro",
     "type": "gamepad",
     "title": "Retro Controller",
-    "description": "Standard retro gamepad with digital buttons."
+    "description": "Standard retro gamepad with digital buttons.",
+    "profiles": {
+        "base": {
+            "btn-start": {
+                "type": "button",
+                "button": "start",
+                "vibrate": 20
+            },
+            "btn-select": {
+                "type": "button",
+                "button": "select",
+                "vibrate": 20
+            },
+            "btn-a": {
+                "type": "button",
+                "button": "a",
+                "vibrate": 20
+            },
+            "btn-b": {
+                "type": "button",
+                "button": "b",
+                "vibrate": 20
+            },
+            "dpad-up": {
+                "type": "axis",
+                "axis-x": 100
+            },
+            "dpad-down": {
+                "type": "axis",
+                "axis-y": -100
+            },
+            "dpad-left": {
+                "type": "axis",
+                "axis-x": -100
+            },
+            "dpad-right": {
+                "type": "axis",
+                "axis-x": 100
+            }
+        }
+    }
 }
