@@ -98,7 +98,7 @@ func NewInput(name string, flags FeatureFlag) (*linuxInputer, error) {
 	f, err := os.OpenFile("/dev/uinput", os.O_RDWR, 0660)
 	if err != nil {
 		e := C.strerror(rc)
-		return nil, fmt.Errorf("Error %d: %s", rc, C.GoString(e))
+		return nil, fmt.Errorf("Error %d (%s) opening /dev/uinput : %s", rc, C.GoString(e), err)
 	}
 
 	// Get file hanadle
@@ -110,7 +110,7 @@ func NewInput(name string, flags FeatureFlag) (*linuxInputer, error) {
 	if rc < 0 {
 		f.Close()
 		e := C.strerror(rc)
-		return nil, fmt.Errorf("Error %d: %s", rc, C.GoString(e))
+		return nil, fmt.Errorf("Error %d creating uinput device: %s", rc, C.GoString(e))
 	}
 
 	return &linuxInputer{

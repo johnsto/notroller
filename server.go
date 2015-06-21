@@ -115,7 +115,7 @@ func RunAction(c *cli.Context) {
 	for i := 0; i < num; i++ {
 		input, err := NewInput(fmt.Sprintf("GoStick #%d", i), SimpleAnalog)
 		if err != nil {
-			log.Fatalln(err)
+			log.Fatalln("Couldn't create input", i, err)
 		}
 		defer input.Close()
 		inputs[i] = input
@@ -128,7 +128,7 @@ func RunAction(c *cli.Context) {
 	}
 
 	if err := handlers.LoadGamepadSpecs(); err != nil {
-		log.Fatalln(err)
+		log.Fatalln("Couldn't load gamepads:", err)
 	}
 
 	router.HandleFunc("/", handlers.HandleIndex)
