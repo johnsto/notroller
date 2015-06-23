@@ -7,7 +7,7 @@
         "beta": {
             "abs:x": true,
             "output": [-100, 100],
-            "input": [-45, 45],
+            "input": [-45, 45]
         }
     }
 }
