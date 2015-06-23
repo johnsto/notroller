@@ -1,8 +1,8 @@
 notroller
 =========
 
-**`notroller` registers itself as a uinput gamepad that can be controlled via
-an unsecured webpage.**
+**`notroller` exposes a virtual uinput gamepad, allowing you to control games
+running on your machine using your smartphone's web browser.**
 
 This exists for demo/proof-of-concept purposes only and is filled with bugs,
 missing functionality, and broken dreams. Truth be told, this is really not
@@ -37,6 +37,9 @@ into their web browser to select a gamepad port and a gamepad interface to use.
 `notroller` hosts an HTTP server on port 5764 on all network interfaces.
 
 `notroller --help` lists all options. 
+
+It should work with any game/application - you can use `jstest` to 
+verify that inputs are being interpreted correctly as a gamepad device.
 
 ## Notes
 There are three types of controller: "Retro", "Retro (analog)" and "Wheel"
