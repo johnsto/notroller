@@ -9,6 +9,13 @@ missing functionality, and broken dreams. Truth be told, this is really not
 a great substitute for an old-fasioned, plastic injection-moulded physical
 controller!
 
+## Disclaimer
+This is a toy project I put together as proof-of-concept. Apologies for the
+mess, and use at your own risk.
+
+*Do not use this on an untrusted network, as it allows remote clients to 
+send inputs to the host.*
+
 ## Requirements
 Linux and Go 1.1 or later, as well as `uinput-devel` (or your distribution's
 equivalent) for the C bindings. Run `go get -a` to fetch all other module
@@ -41,10 +48,3 @@ Up/Down/Left/Right.
 
 The Wheel controller looks like a steering wheel and uses the orientation
 sensors of your device.
-
-## Disclaimer
-This is a toy project I put together as proof-of-concept. Apologies for the
-mess, and use at your own risk.
-
-*Do not use this on an untrusted network, as it allows remote clients to 
-send inputs to the host.*
