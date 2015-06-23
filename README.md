@@ -2,10 +2,12 @@ notroller
 =========
 
 **`notroller` registers itself as a uinput gamepad that can be controlled via
-an unsecured webpage. For demo/proof-of-concept purposes only.**
+an unsecured webpage.**
 
-This code used to work well, but it appears inputs are being interpreted
-incorrectly in this version.
+This exists for demo/proof-of-concept purposes only and is filled with bugs,
+missing functionality, and broken dreams. Truth be told, this is really not
+a great substitute for an old-fasioned, plastic injection-moulded physical
+controller!
 
 ## Requirements
 Linux and Go 1.1 or later, as well as `uinput-devel` (or your distribution's
@@ -15,6 +17,10 @@ dependencies.
 Ensure your user has permissions to read `/dev/uinput` - on most Linux systems
 this is a simple matter of adding your user to the `input` group (or whatever
 group `/dev/uinput` belongs to on your system.)
+
+(If you fancy adding support for another OS, it's a simple case of 
+implementing the interface defined by `input.go` - see `input_linux.go` for 
+the Linux implementation.)
 
 ## Usage
 Running this code exposes an HTTP (port 5764 by default) that allows remote
