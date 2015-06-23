@@ -140,7 +140,7 @@ gostick.ButtonWidget = (function() {
     return ButtonWidget;
 })();
 
-/*gostick.AbsWidget = (function() {
+gostick.AbsWidget = (function() {
     // AbsWidget is a button that contains values for one or more absolute
     // axis.
     function AbsWidget(el, options) {
@@ -184,8 +184,11 @@ gostick.ButtonWidget = (function() {
     AbsWidget.prototype.readState = function(state) {
     };
 
+    AbsWidget.prototype.onUpdate = function(state) {
+    };
+
     return AbsWidget;
-})();*/
+})();
 
 // WheelWidget rotates with orientation
 gostick.WheelWidget = (function() {

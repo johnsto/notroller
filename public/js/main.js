@@ -140,13 +140,13 @@ var gostick = {};
 
             if(p.w && p.h) {
                 // Find all elements within rectangular contact area
-                var docEl = doc.documentElement,
+                var d = doc.documentElement,
                     r = d.createSVGRect();
                 r.x = p.x;
                 r.y = p.y;
                 r.width = p.w;
                 r.height = p.h;
-                var els = docEl.getIntersectionList(r, null);
+                var els = d.getIntersectionList(r, null);
                 for(var j = 0; j < els.length; j++) {
                     rv[els[j].id] = p;
                 }
@@ -158,7 +158,7 @@ var gostick = {};
 
     // onInputChanged is fired whenver input changes.
     // @param props - a list of property names that have changed
-    gostick.GoStick.prototype.onInputChanged = function(props) {
+    gostick.GoStick.prototype.onInputChanged = function() {
         var self = this;
         var svg = this.svg,
             svgDoc = this.svgDoc,
@@ -170,19 +170,21 @@ var gostick = {};
         var state = {},
             lastState = this.lastState || {};
 
-        // Fire touch/untouch events
-        var touchedIds = getTouchedWidgets(svgDoc, input.points);
-        for(var id in touchedIds) {
-            var w = touchWidgets[id],
-                p = touchedIds[id];
-            if(!w) {
-                // No widget found for this element ID?!
-                continue;
-            }
-            if(p) {
-                w.onTouch(p, state);
-            } else {
-                w.onUntouch(p, state);
+        if(input.points) {
+            // Fire touch/untouch events
+            var touchedIds = getTouchedWidgets(svgDoc, input.points);
+            for(var id in touchedIds) {
+                var w = touchWidgets[id],
+                    p = touchedIds[id];
+                if(!w) {
+                    // No widget found for this element ID?!
+                    continue;
+                }
+                if(p) {
+                    w.onTouch(p, state);
+                } else {
+                    w.onUntouch(p, state);
+                }
             }
         }
 
